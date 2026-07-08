@@ -39,7 +39,14 @@ app.get("/api/pessoa" ,(req , res) => {
  res.send({ message: " pessoa criada com sucesso " })
 });
 //alterar 
+app.get("/api/Delete"  , (req , res ) => {
+const id = req.params.id;
 
+const pessoa = bancoDeDados.find(it => it.id == id );
+
+
+
+});
 
 // inicia o servidor express na porta 3000 e define uma função de retorno de chamada.
 app.listen(3000, () => {
