@@ -32,13 +32,20 @@ res.send({
     message : resultado 
   })
 })
-app.get ("/api/v1/mutiplicar", (req, res ) => {
+app.get ("/api/v1/exer2", (req, res ) => {
 const { num1 , num2 } = req.query 
 const resultado = Number(num1) * Number(num2)
 // if else 
 res.send({
     message : resultado 
   })
+})
+app.post ("/api/v1/exer3", (req, res ) => {
+const { salarioH , horas } = req.body 
+const resultado = Number(num1) * Number(num2)
+// if else 
+res.send({
+    message  : " seu salario " ,  resultado })
 })
 app.listen(3000, () => {
     
