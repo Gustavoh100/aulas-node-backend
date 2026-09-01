@@ -3,9 +3,9 @@ import ServiceCarro from '../service/carro.js'
 
 class ControllerCarro {
     // recebimento e saida das informações  
-    Buscar(req, res) {
+   async Buscar(req, res) {
         try {
-            const carros = ServiceCarro.Buscar()
+            const carros = await ServiceCarro.Buscar()
             res.send({ mensagem: carros })
         } catch (error) {
             res.status(500).send({
@@ -17,7 +17,7 @@ class ControllerCarro {
     Detalhe(req, res) {
         try {
             const id = req.params.id
-            
+
             const carro = ServiceCarro.Detalhe(id)
 
             res.send({ mensagem: "cadastrado com sucesso" })
@@ -28,10 +28,10 @@ class ControllerCarro {
         }
     }
 
-    Criar(req, res) {
+ async Criar(req, res) {
         try {
-            const { id, marca, ano } = req.body
-           
+            const { id, marca, ano } = await req.body
+
             res.send({ mensagem: "cadastro com sucesso " })
         } catch (error) {
             res.status(500).send({
@@ -43,14 +43,14 @@ class ControllerCarro {
     Alterar(req, res) {
         try {
             const id = req.body.id
-            const { marca , ano} = req.query
+            const { marca, ano } = req.query
 
-             ServiceCarro.Alterar(id , marca , ano)
+            ServiceCarro.Alterar(id, marca, ano)
             res.send({ mensagem: "alterado com sucesso " })
         } catch (error) {
-            
+
             res.status(500).send({
-            mensagem: error.mensagem
+                mensagem: error.mensagem
             })
         }
     }
@@ -58,7 +58,7 @@ class ControllerCarro {
     Deletar(req, res) {
         try {
             const id = req.body.id
-          
+
             ServiceCarro.Deletar(id)
             res.send({ mensagem: "deletado " })
         } catch (error) {

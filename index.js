@@ -1,12 +1,24 @@
- import express from 'express'
+import express from 'express'
 import carro from './router/carro.js'
+import database from './config/database.js'
 
 
- const app = express()
+const app = express()
 
 app.use(express.json())
 
-app.use("/api/v1/carro" , carro)
+app.use("/api/v1/carro", carro)
+
+database.db
+    .sync({force: false})
+    .then((_) => {
+        app.listen(3000, () => {
+            console.log("servidor rodando na porta 3000")
+        })
+    })
+    .catch ((e) => {
+        console.log(e)
+    })
 
 
 
@@ -14,8 +26,4 @@ app.use("/api/v1/carro" , carro)
 
 
 
-
-
- app.listen(3000, () => {
-console.log("Servindo ouvindo a porta 3000")
- })
+// npm i sequelize mysql2

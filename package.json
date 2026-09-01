@@ -16,9 +16,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev" : "node --watch index.js"
+    "dev": "node --watch index.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mysql2": "^3.24.2",
+    "sequelize": "^6.37.8" 
   }
 }
