@@ -3,7 +3,7 @@ import ServiceCarro from '../service/carro.js'
 
 class ControllerCarro {
     // recebimento e saida das informações  
-   async Buscar(req, res) {
+    async Buscar(req, res) {
         try {
             const carros = await ServiceCarro.Buscar()
             res.send({ mensagem: carros })
@@ -14,11 +14,11 @@ class ControllerCarro {
         }
     }
 
-    Detalhe(req, res) {
+    async Detalhe(req, res) {
         try {
             const id = req.params.id
 
-            const carro = ServiceCarro.Detalhe(id)
+            const carro = await ServiceCarro.Detalhe(id)
 
             res.send({ mensagem: "cadastrado com sucesso" })
         } catch (error) {
@@ -28,10 +28,11 @@ class ControllerCarro {
         }
     }
 
- async Criar(req, res) {
+    async Criar(req, res) {
         try {
-            const { id, marca, ano } = await req.body
+            const {  marca, ano } = req.body
 
+            await ServiceCarro.Criar(marca, ano)
             res.send({ mensagem: "cadastro com sucesso " })
         } catch (error) {
             res.status(500).send({
@@ -40,12 +41,12 @@ class ControllerCarro {
         }
     }
 
-    Alterar(req, res) {
+  async  Alterar(req, res) {
         try {
             const id = req.body.id
             const { marca, ano } = req.query
 
-            ServiceCarro.Alterar(id, marca, ano)
+         await   ServiceCarro.Alterar(id, marca, ano)
             res.send({ mensagem: "alterado com sucesso " })
         } catch (error) {
 
@@ -55,11 +56,11 @@ class ControllerCarro {
         }
     }
 
-    Deletar(req, res) {
+   async Deletar(req, res) {
         try {
-            const id = req.body.id
+            const identificador = req.body.id
 
-            ServiceCarro.Deletar(id)
+          await ServiceCarro.Deletar(identificador)
             res.send({ mensagem: "deletado " })
         } catch (error) {
             res.status(500).send({
