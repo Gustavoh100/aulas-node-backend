@@ -1,12 +1,12 @@
-import ServiceCarro from '../service/carro.js'
+import ServiceUsuario from '../service/usuario.js'
 
 
-class ControllerCarro {
+class ControllerUsuario {
     // recebimento e saida das informações  
     async Buscar(req, res) {
         try {
-            const carros = await ServiceCarro.Buscar()
-            res.send({ mensagem: carros })
+            const usuarios = await ServiceUsuario.Buscar()
+            res.send({ mensagem: usuarios })
         } catch (error) {
             res.status(500).send({
                 mensagem: error.mensagem
@@ -18,9 +18,9 @@ class ControllerCarro {
         try {
             const id = req.params.id
 
-            const carro = await ServiceCarro.Detalhe(id)
+            const usuario = await ServiceUsuario.Detalhe(id)
 
-            res.send({ mensagem: carro })
+            res.send({ mensagem: usuario })
         } catch (error) {
             res.status(500).send({
                 mensagem: error.mensagem
@@ -30,9 +30,9 @@ class ControllerCarro {
 
     async Criar(req, res) {
         try {
-            const {  marca, ano } = req.body
+            const {  email, senha } = req.body
 
-            await ServiceCarro.Criar(marca, ano)
+            await ServiceUsuario.Criar(email, senha)
             res.send({ mensagem: "cadastro com sucesso " })
         } catch (error) {
             res.status(500).send({
@@ -44,9 +44,9 @@ class ControllerCarro {
   async  Alterar(req, res) {
         try {
             const id = req.body.id
-            const { marca, ano } = req.query
+            const { email, senha } = req.query
 
-         await   ServiceCarro.Alterar(id, marca, ano)
+         await   ServiceUsuario.Alterar(id, email, senha)
             res.send({ mensagem: "alterado com sucesso " })
         } catch (error) {
 
@@ -60,7 +60,7 @@ class ControllerCarro {
         try {
             const identificador = req.body.id
 
-          await ServiceCarro.Deletar(identificador)
+          await ServiceUsuario.Deletar(identificador)
             res.send({ mensagem: "deletado " })
         } catch (error) {
             res.status(500).send({
@@ -68,4 +68,20 @@ class ControllerCarro {
             })
         }
     }
-} export default new ControllerCarro()
+
+    async Login(req,res){
+        try {
+            const {email , senha } = req.body
+            const token = await ServiceUsuario.Login(email , senha)
+            res.status(200).send({
+              Token
+            })
+            
+        } catch (error) {
+            res.status(500).send({
+            message : error.message
+            })
+        }
+
+    }
+} export default new ControllerUsuario()
