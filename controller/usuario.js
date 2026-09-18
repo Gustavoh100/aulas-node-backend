@@ -5,6 +5,7 @@ class ControllerUsuario {
     // recebimento e saida das informações  
     async Buscar(req, res) {
         try {
+            console.log(req.session)
             const usuarios = await ServiceUsuario.Buscar()
             res.send({ mensagem: usuarios })
         } catch (error) {
@@ -43,7 +44,7 @@ class ControllerUsuario {
 
   async  Alterar(req, res) {
         try {
-            const id = req.body.id
+            const id = req.session.id
             const { email, senha } = req.query
 
          await   ServiceUsuario.Alterar(id, email, senha)
@@ -58,7 +59,7 @@ class ControllerUsuario {
 
    async Deletar(req, res) {
         try {
-            const identificador = req.body.id
+            const identificador = req.session.id
 
           await ServiceUsuario.Deletar(identificador)
             res.send({ mensagem: "deletado " })
@@ -74,7 +75,7 @@ class ControllerUsuario {
             const {email , senha } = req.body
             const token = await ServiceUsuario.Login(email , senha)
             res.status(200).send({
-              Token
+              token
             })
             
         } catch (error) {

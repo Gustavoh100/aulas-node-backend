@@ -27,7 +27,10 @@ class ServiceUsuario {
             throw new Error("favor informar todos os dados ")
             return
         }
-        const usuario = await RepositoryUsuario.Create(email, senha)
+        const senhaCripto = await bcrypt.hash(senha, 12)
+
+
+        const usuario = await RepositoryUsuario.Create(email, senhaCripto)
 
 
         return usuario
@@ -37,7 +40,11 @@ class ServiceUsuario {
         if (!id || !email || !senha) {
             throw new Error("favor informar id ")
         }
-        const usuarioAlterado = await RepositoryUsuario.Update(id, email, senha)
+        const senhaCripto = !senha
+            ? undefined
+            : await bcrypt.hash(senha, 12)
+
+        const usuarioAlterado = await RepositoryUsuario.Update(id, email, senhaCripto)
 
         return usuarioAlterado
 
@@ -51,11 +58,15 @@ class ServiceUsuario {
         const usuario = RepositoryUsuario.Delete(id)
         return id
     }
+
+
+
+
     async Login(email, senha) {
         if (!email || !senha) {
             throw new Error("Email ou senha invalido ")
         }
-        const usuario = await RepositoryUsuario.FindByEmail(ElementInternals)
+        const usuario = await RepositoryUsuario.FindByEmail(email)
 
         if (!usuario) {
             throw new Error("Email ou senha invalido")
@@ -71,6 +82,7 @@ class ServiceUsuario {
             { expiresIn: 60 * 60 }
         )
     }
+    // testee 
 
 
 } export default new ServiceUsuario()

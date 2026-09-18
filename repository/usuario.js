@@ -4,9 +4,9 @@ import usuario from '../model/usuario.js'
 //INSERT INTO usuario( email, senha) VALUES ("FIAT", 1998)
 class RepositoryUsuario {
   async Find() {
-    const usuario = await usuario.findAll()
+    const usuarios = await usuario.findAll()
 
-    return usuario
+    return usuarios
   }
   async FindById(id) {
     const usuarioDetalhes = await usuario.findByPk(id)
